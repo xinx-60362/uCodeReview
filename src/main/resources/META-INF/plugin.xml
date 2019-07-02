@@ -1,0 +1,60 @@
+<idea-plugin>
+  <id>org.idea.UCodeReview</id>
+  <name>UCodeReview</name>
+  <version>1.0.6</version>
+  <vendor email="wnc20000@gmail.com">personal</vendor>
+
+  <description><![CDATA[
+            <html>
+                It is convenient  when Development Engineer recording,Cached,viewing And exporting Code Review info.
+                1. Right-click Add Code Review to add a bug information record for the reviewer to review a block of code
+                    and display it in the following SimpleCode Review list
+                2. UCodeReview List supports checking, clearing, and exporting Review information
+            </html>
+      ]]></description>
+
+  <change-notes><![CDATA[
+        <html>
+            <ul>
+                <li>
+                    1.0 - The first version
+                </li>
+            </ul>
+        </html>
+    ]]>
+  </change-notes>
+
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+  <idea-version since-build="173.0"/>
+
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+       on how to target different products -->
+  <!-- uncomment to enable plugin in all products
+  <depends>com.intellij.modules.lang</depends>
+  -->
+  <extensions defaultExtensionNs="com.intellij">
+    <projectService serviceInterface="open.ucodereview.data.ReviewDataService"
+      serviceImplementation="open.ucodereview.data.ReviewDataService"/>
+    <toolWindow id="UCodeReview" icon="/images/list.png" anchor="bottom"
+      canCloseContents="true"
+      factoryClass="open.ucodereview.view.component.UCodeReviewToolWindowFactory"/>
+  </extensions>
+
+  <actions>
+    <!-- Add your actions here -->
+    <action id="UCodeReview.AddCodeReview"
+      class="open.ucodereview.action.AddCodeReviewAction"
+      text="AddCodeReview" description="Select the right-click list of codes to add codeReview"
+      icon="/images/add.png">
+      <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+      <keyboard-shortcut keymap="$default" first-keystroke="alt X"/>
+    </action>
+  </actions>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <projectConfigurable groupId="tools" displayName="UCodeReview Setting"
+      id="preferences.UCodeReview"
+      instance="open.ucodereview.setting.DeveloperConfiguration"/>
+  </extensions>
+
+</idea-plugin>
