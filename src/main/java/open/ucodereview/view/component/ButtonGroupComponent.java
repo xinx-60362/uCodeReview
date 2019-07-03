@@ -14,36 +14,25 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.ui.table.JBTable;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
-import java.awt.Dimension;
-import java.awt.Insets;
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.Arrays;
-import java.util.List;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import open.ucodereview.view.component.action.callback.SendMailCallBack;
-import org.jetbrains.annotations.NotNull;
-import open.ucodereview.enums.ReviewListColumnEnum;
-import open.ucodereview.entity.ReviewInfo;
 import open.ucodereview.data.ReviewDataService;
+import open.ucodereview.entity.ReviewInfo;
+import open.ucodereview.enums.ReviewListColumnEnum;
 import open.ucodereview.setting.messages.MessageBundle;
+import open.ucodereview.util.CommonTools;
 import open.ucodereview.view.component.action.ClearAction;
 import open.ucodereview.view.component.action.ExportAction;
 import open.ucodereview.view.component.action.SendMailAction;
 import open.ucodereview.view.component.action.callback.ExportCallBackImpl;
-import open.ucodereview.util.CommonTools;
+import open.ucodereview.view.component.action.callback.SendMailCallBack;
+import org.jetbrains.annotations.NotNull;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.*;
+import java.util.Arrays;
+import java.util.List;
 
 public class ButtonGroupComponent {
 
@@ -231,12 +220,12 @@ public class ButtonGroupComponent {
   }
 
   class TableMouseListener implements MouseListener {
-
+    @Override
     public void mouseClicked(MouseEvent e) {
       if (!showReviewListTable.getSelectionModel().isSelectionEmpty()) {
         int modelRow = CommonTools
             .convert2ModelRow(showReviewListTable, showReviewListTable.getSelectedRow());
-        String id = (String) reviewInfoModel.getValueAt(modelRow, 10);
+        String id = (String) reviewInfoModel.getValueAt(modelRow, ReviewListColumnEnum.ID.getIndex());
         ReviewInfo reviewInfo = reviewDataService.getResourse(id);
         if (null != reviewInfo) {
           VirtualFile virtualFile = LocalFileSystem.getInstance().findFileByPath(
